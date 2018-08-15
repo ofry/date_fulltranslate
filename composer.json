@@ -1,6 +1,7 @@
 {
     "name": "ofry/date_fulltranslate",
     "description": "A date library to help you work with dates in different languages",
+    "license": "MIT",
     "require": {
         "php": ">=5.6",
         "jenssegers/date": "^3.4"
