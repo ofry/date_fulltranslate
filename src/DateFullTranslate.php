@@ -9,9 +9,48 @@
     namespace ofry\DateFullTranslate;
 
     use Jenssegers\Date\Date;
+    use Carbon\Carbon;
+    use DateTimeZone;
 
     class DateFullTranslate extends Date
     {
+        /**
+         * Create a Date instance from a string.
+         *
+         * @param  string $time
+         * @param  string|DateTimeZone $timezone
+         * @return DateFullTranslate
+         */
+        public static function parse($time = null, $timezone = null)
+        {
+            if ($time instanceof Carbon) {
+                return new static(
+                    $time->toDateTimeString(),
+                    $timezone ?: $time->getTimezone()
+                );
+            }
+
+            if (!is_int($time)) {
+                $time = static::translateTimeString($time);
+            }
+
+            return new static($time, $timezone);
+        }
+
+        /**
+         * Create a DateFullTranslate instance from a specific format.
+         *
+         * @param string                    $format Datetime format
+         * @param string                    $time
+         *
+         */
+        public static function createFromFormat($format, $time, $timezone = null)
+        {
+            $time = static::translateTimeString($time);
+
+            return parent::createFromFormat($format, $time, $timezone);
+        }
+
         /**
          * Translate a locale based time string to its english equivalent.
          *
